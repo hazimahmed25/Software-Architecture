@@ -1,0 +1,40 @@
+import java.util.*;
+
+/**
+ * 
+ */
+public class ride implements subject {
+
+        String sourceArea;
+        String destination;
+        int driverID;
+        int passengerID;
+        int rideID;
+        
+        public void requestride(String s ,String d) {
+            source = x;
+            destination = y;
+        }
+
+
+    public ride() {
+    }
+
+    private calculateETA calc;
+
+
+    public void start() {
+    }
+
+    public void state(boolen) {
+        if (ride==true)
+        {
+            System.out.println("Ride Is completed");
+        }
+        else{
+            System.out.println("Ride is active");
+        }
+
+    }
+
+}
