@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class admin user extends driver {
+
+    public Admin() {
+	}
+
+	public Admin(String username, String phone_number, String email, String password){
+		super(username,phone_number,email,password);
+	}
+	public boolean  verifyRegisteration(Driver d) {
+		
+			for(int i=0 ; i<drivers.size(); i++)
+				if(drivers.get(i) == d)
+					return true;
+
+		return false;
+	}
+
+    private int adminID;
+
+
+    private string admin_password;
+
+    public void list_registrations(driver DRIEVER) {
+        String[] pendingDriverRegistrations;
+    }
+
+}
