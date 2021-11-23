@@ -1,0 +1,15 @@
+import java.util.*;
+
+public interface observer {
+
+    public void update_new_ride();
+    {
+        void update(Ride r);
+    }
+
+    public void update_offer();
+    {
+        void update(Offer O);
+    }
+
+}
