@@ -1,0 +1,8 @@
+import java.util.*;
+public interface calculation {
+
+    public void calculate_ETA();
+
+    public void calculate_distance();
+
+}
