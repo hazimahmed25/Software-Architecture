@@ -1,0 +1,14 @@
+package com.example.demo.rest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class MapController {
+    @RequestMapping("/home")
+    @ResponseBody
+    public String welcome() {
+        return "home";
+    }
+}
