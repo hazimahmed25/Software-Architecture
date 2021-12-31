@@ -1,0 +1,206 @@
+package com.example.demo.rest;
+
+import com.example.demo.modules.DriverModule;
+import com.example.demo.modules.RideModule;
+import com.example.demo.modules.RideOffer;
+import com.example.demo.modules.UserModule;
+import com.example.demo.requests.DriverRequest;
+import com.example.demo.requests.UserRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+
+@RestController
+@RequestMapping(path = "/SDA")
+public class SDA {
+
+    public static ArrayList<UserModule> allUsers = new ArrayList<>();
+    public static ArrayList<DriverModule> allDrivers = new ArrayList<>();
+    public static ArrayList<RideModule> allRides = new ArrayList<>();
+    public static ArrayList<RideOffer> allOffers = new ArrayList<>();
+
+
+
+
+
+    public static void driverHaveRidersInHisFavoriteAreas(DriverModule driverModule){
+        for(RideModule rideModule : allRides){
+            if(driverModule.getFavoriteAreas().contains(rideModule.getSource())){
+                System.out.println("This Driver With name : "+driverModule.getFirstName()+" "+driverModule.getLastName()
+                        +"has request in his Favorite Areas and area is : "+rideModule.getSource());
+            }
+        }
+    }
+
+
+    @PostMapping("/fillData")
+    public void fillData(){
+
+        //Creating user with email
+        UserModule userWithEmail = new UserModule("ahmed" , "khaled" , "01855978569" , "ahmed@SDC.com" ,"126878" );
+        allUsers.add(userWithEmail);
+
+        //Creating user Without email
+        UserModule userWithoutEmail = new UserModule("ahmed" , "khaled" , "01855978569" , "126878" );
+        allUsers.add(userWithoutEmail);
+
+
+        //Creating driver with email
+        DriverModule driverWithEmail = new DriverModule("ahmed" , "khaled" , "01855978569"
+                , "ahmed@SDC.com" ,"126878" , "15/12/2022" ,"2658225485626647" );
+        allDrivers.add(driverWithEmail);
+
+        //Creating driver Without email
+        DriverModule driverWithoutEmail = new DriverModule("ahmed" , "khaled" , "01855978569"
+                ,"126878" ,"15/12/2022" ,"2658225485626647" );
+        allDrivers.add(driverWithoutEmail);
+
+
+        //try to login user
+        Boolean isUserLoggedIn = userLogin("ahmed" , "126878");
+        if(isUserLoggedIn){
+            System.out.println("User Login successfully !!!");
+        }else {
+            System.out.println("This User cant Login Need to register It !!!");
+        }
+
+        //Admin verify The Driver Account
+        //Verify The Driver Account
+        driverWithEmail.setVerified(true);
+
+        //Admin also can deactivate the driver account
+        driverWithEmail.setVerified(false);
+
+        //Admin activate the driver account again
+        driverWithEmail.setVerified(true);
+
+
+
+        //try to login driver
+        Boolean isDriverLoggedIn = driverLogin("ahmed" , "126878");
+        if(isDriverLoggedIn){
+            System.out.println("Driver Login successfully !!!");
+        }else {
+            System.out.println("This Driver cant Login Need to register It or verify his account !!!");
+        }
+
+
+        //Requesting Ride For Detected User
+        RideModule requestedRide = new RideModule("Cairo Uni", "Hadayek Al Ahram",userWithEmail);
+        RideModule requestedRide2 = new RideModule("Cairo Uni 2", "Hadayek Al Ahram 2",userWithEmail);
+        RideModule requestedRide3 = new RideModule("Cairo Uni 3", "Hadayek Al Ahram 3",userWithEmail);
+        RideModule requestedRide4 = new RideModule("Cairo Uni 4", "Hadayek Al Ahram 4",userWithEmail);
+        allRides.add(requestedRide);
+        allRides.add(requestedRide2);
+        allRides.add(requestedRide3);
+        allRides.add(requestedRide4);
+
+        //Admin Assign The Ride to Driver
+        requestedRide.setDriverRide(driverWithEmail);
+
+        //Adding Some favorite Areas to Driver
+        driverWithEmail.addFavoriteArea("Dookie");
+        driverWithEmail.addFavoriteArea("Giza");
+
+        //Printing All favoriteAreas for One Driver
+        driverWithEmail.getFavoriteAreas().forEach(System.out::println);
+
+
+        //Notify and Check The driver if any request in his favorite Areas
+        driverHaveRidersInHisFavoriteAreas(driverWithEmail);
+
+        //List all Rides
+        allRides.forEach(RideModule::display);
+
+        System.out.println("**************");
+        System.out.println("**************");
+
+        //Adding new Offer For a created Ride by driver
+        RideOffer rideOffer = new RideOffer(driverWithEmail,requestedRide,125.5);
+        allOffers.add(rideOffer);
+        //Send The Offer to the client
+        userWithEmail.addNewOffer(rideOffer);
+
+
+        //Adding new Offer For a created Ride by driver
+        RideOffer rideOffer2 = new RideOffer(driverWithEmail,requestedRide,125.5);
+        allOffers.add(rideOffer2);
+        //Send The Offer to the client
+        userWithEmail.addNewOffer(rideOffer2);
+
+
+        System.out.println("**************");
+        //List all offers of this client
+        userWithEmail.displayAllOffers();
+
+    }
+
+
+
+
+    @PostMapping("/users/add")
+    public ResponseEntity<?> addUser(@RequestBody UserRequest user){
+        UserModule userModule = new UserModule(user.getFirstName(),user.getLastName(),user.getPhoneNumber(),user.getEmail(),user.getPassword());
+        allUsers.add(userModule);
+        return ResponseEntity.ok(userModule);
+    }
+
+    @PostMapping("/drivers/add")
+    public ResponseEntity<?> addDriver(@RequestBody DriverRequest driver){
+        DriverModule driverModule = new DriverModule(driver.getFirstName(),driver.getLastName(),driver.getPhoneNumber(),driver.getEmail(),driver.getPassword(),driver.getDrivingLicense() , driver.getNationalId());
+        allDrivers.add(driverModule);
+        return ResponseEntity.ok(driverModule);
+    }
+
+
+    @GetMapping("/users/login")
+    public static Boolean userLogin(@RequestParam String userName ,@RequestParam String password){
+        for(UserModule userModule : allUsers){
+            if(userModule.getFirstName().equals(userName) && userModule.getPassword().equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @GetMapping("/drivers/login")
+    public static Boolean driverLogin(String driverName , String password){
+        for(DriverModule driver : allDrivers){
+            if(driver.getFirstName().equals(driverName) && driver.getPassword().equals(password)){
+                if(driver.isVerified())
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    @GetMapping("/users/list")
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(allUsers);
+    }
+
+    @GetMapping("/rides/list")
+    public ResponseEntity<?> getAllRides() {
+        return ResponseEntity.ok(allRides);
+    }
+
+    @GetMapping("/drivers/list")
+    public ResponseEntity<?> getAllDrivers() {
+        return ResponseEntity.ok(allDrivers);
+    }
+
+    @GetMapping("/offers/list")
+    public ResponseEntity<?> getAllOffers() {
+        return ResponseEntity.ok(allOffers);
+    }
+
+    @GetMapping("/map")
+    public String homePage() {
+        return "home";
+    }
+
+
+
+}
