@@ -1,0 +1,47 @@
+package com.example.demo.modules;
+
+public class RideOffer {
+
+    DriverModule driver;
+    RideModule ride;
+    Double offerPrice;
+
+    public RideOffer( DriverModule driver, RideModule ride, Double offerPrice) {
+
+        this.driver = driver;
+        this.ride = ride;
+        this.offerPrice = offerPrice;
+    }
+
+    public DriverModule getDriver() {
+        return driver;
+    }
+
+    public void setDriver(DriverModule driver) {
+        this.driver = driver;
+    }
+
+    public RideModule getRide() {
+        return ride;
+    }
+
+    public void setRide(RideModule ride) {
+        this.ride = ride;
+    }
+
+    public Double getOfferPrice() {
+        return offerPrice;
+    }
+
+    public void setOfferPrice(Double offerPrice) {
+        this.offerPrice = offerPrice;
+    }
+
+    public void display(){
+        System.out.println("********Ride Details********");
+        ride.display();
+        System.out.println("********Driver Details********");
+        driver.display();
+        System.out.println("Offer is : "+offerPrice);
+    }
+}
