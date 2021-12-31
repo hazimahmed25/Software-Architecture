@@ -1,8 +1,0 @@
-import java.util.*;
-
-public interface subject {
-
-    public observer sub[];
- 
-    public void notify();
-}
