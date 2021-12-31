@@ -1,0 +1,74 @@
+package com.example.demo.modules;
+
+import com.example.demo.modules.UserModule;
+
+import java.util.*;
+
+public class DriverModule extends UserModule {
+    private String drivingLicense ;
+    private String nationalId;
+    private List<String> favoriteAreas;
+
+    private Boolean verified;
+
+    //Without Email
+    public DriverModule(String firstName, String lastName, String phoneNumber, String password, String drivingLicense, String nationalId) {
+        super(firstName, lastName, phoneNumber, password);
+        this.drivingLicense = drivingLicense;
+        this.nationalId = nationalId;
+        this.favoriteAreas = new ArrayList<>();
+        this.verified = false;
+        System.out.println("Registered New Driver Account Without Email And Driver Name IS : "+firstName+" "+lastName);
+    }
+
+    //With Email
+    public DriverModule(String firstName, String lastName, String phoneNumber, String email, String password, String drivingLicense, String nationalId) {
+        super(firstName, lastName, phoneNumber, email, password);
+        this.drivingLicense = drivingLicense;
+        this.nationalId = nationalId;
+        this.favoriteAreas = new ArrayList<>();
+        this.verified = false;
+        System.out.println("Registered New Driver Account With Email And Driver Name IS : "+firstName+" "+lastName);
+    }
+
+    public String getDrivingLicense() {
+        return drivingLicense;
+    }
+
+    public void setDrivingLicense(String drivingLicense) {
+        this.drivingLicense = drivingLicense;
+    }
+
+    public String getNationalId() {
+        return nationalId;
+    }
+
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
+
+    public Boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+        if(verified){
+            System.out.println("Activate the driver Account The Driver Name Is : "+super.getFirstName()+" "+super.getLastName());
+        }else if (!verified){
+            System.out.println("Deactivate the driver Account The Driver Name Is : "+super.getFirstName()+" "+super.getLastName());
+        }
+    }
+
+    public void addFavoriteArea(String favoriteArea){
+        this.favoriteAreas.add(favoriteArea);
+    }
+
+    public List<String> getFavoriteAreas(){
+        return favoriteAreas;
+    }
+
+    public void display(){
+        super.display();
+    }
+}
