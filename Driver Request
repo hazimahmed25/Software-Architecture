@@ -1,0 +1,13 @@
+package com.example.demo.requests;
+
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+
+public class DriverRequest extends UserRequest{
+    private String drivingLicense ;
+    private String nationalId;
+}
