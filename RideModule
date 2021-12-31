@@ -1,0 +1,71 @@
+package com.example.demo.modules;
+
+import com.example.demo.modules.UserModule;
+
+public class RideModule {
+    private String source;
+    private String destination;
+    private String rideStatus;
+    private UserModule userRequesterRide;
+    private DriverModule driverRide;
+
+    public RideModule(String source, String destination , UserModule userRequesterRide) {
+        this.source = source;
+        this.destination = destination;
+        this.rideStatus = "Pending";
+        this.userRequesterRide = userRequesterRide;
+        System.out.println("The Ride Request Done And Ride status is "+this.rideStatus + " And The ride Data Is \n"
+                +"Ride Source : "+this.source+"\n"
+                +"Ride Destination : "+this.destination+"\n"
+                +"User Requester Ride : "+userRequesterRide.getFirstName()+" "+userRequesterRide.getLastName());
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getRideStatus() {
+        return rideStatus;
+    }
+
+    public void setRideStatus(String rideStatus) {
+        this.rideStatus = rideStatus;
+        System.out.println("Ride Status Changed to : "+rideStatus);
+    }
+
+    public UserModule getUserRequesterRide() {
+        return userRequesterRide;
+    }
+
+    public void setUserRequesterRide(UserModule userRequesterRide) {
+        this.userRequesterRide = userRequesterRide;
+    }
+
+    public DriverModule getDriverRide() {
+        return driverRide;
+    }
+
+    public void setDriverRide(DriverModule driverRide) {
+        this.driverRide = driverRide;
+        System.out.println("The Ride With Source : "+this.source+" And Destination : "+this.destination +" Assigned To Driver : "+driverRide.getFirstName()+" "+driverRide.getLastName());
+    }
+
+    public void display(){
+        System.out.println("Source :"+source);
+        System.out.println("destination :"+destination);
+        System.out.println("rideStatus :"+rideStatus);
+
+    }
+}
